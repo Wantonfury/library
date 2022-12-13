@@ -83,6 +83,17 @@ function Book(title, author, pages, read) {
 
 const btnAdd = document.getElementById("btn-add");
 const btnSubmit = document.getElementById("book-entry-form");
+const formOverlay = document.querySelector("#book-entry");
+
+function ResetForm() {
+    let textFields = document.querySelectorAll("input[type=text], input[type=number]");
+    [...textFields].forEach(field => {
+        field.value = "";
+    });
+    
+    let readCheckbox = document.querySelector("input[type=checkbox]");
+    readCheckbox.checked = false;
+}
 
 btnAdd.addEventListener("click", () => {
     let entry = document.getElementById("book-entry");
@@ -101,17 +112,18 @@ btnSubmit.addEventListener("submit", (e) => {
     library.add(new Book(title, author, pages, read));
     library.update();
     
-    let textFields = document.querySelectorAll("input[type=text], input[type=number]");
-    [...textFields].forEach(field => {
-        field.value = "";
-    });
-    
-    let readCheckbox = document.querySelector("input[type=checkbox]");
-    readCheckbox.checked = false;
+    ResetForm();
     
     e.preventDefault();
 });
 
-let library = new Library();
+formOverlay.addEventListener("click", (e) => {
+    let form = document.querySelector("#book-entry-form");
+    if (e.target !== e.currentTarget) return;
+    
+    e.currentTarget.style.visibility = "hidden";
+    ResetForm();
+});
 
+let library = new Library();
 library.update();
