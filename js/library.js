@@ -6,8 +6,9 @@ Library.prototype.add = function(book) {
     myLibrary.push(book);
 }
 
-Library.prototype.remove = function(book) {
-    myLibrary.remove(book);
+Library.prototype.remove = function(index) {
+    if (index < 0) return;
+    myLibrary.splice(index, 1);
 }
 
 Library.prototype.update = function() {
@@ -15,7 +16,7 @@ Library.prototype.update = function() {
     
     bookContainer.innerHTML = "";
     
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, index) => {
         let card = document.createElement("div");
         
         card.classList.add("book-card");
@@ -25,6 +26,18 @@ Library.prototype.update = function() {
         let author = document.createElement("p");
         let pages = document.createElement("p");
         let read = document.createElement("button");
+        let removeBook = document.createElement("button");
+        let removeImg = document.createElement("img");
+        
+        removeBook.appendChild(removeImg);
+        removeBook.classList.add("book-remove");
+        removeImg.src = "img/icon-book-remove.png";
+        removeBook.dataset.index = index;
+        
+        removeBook.addEventListener("click", (e) => {
+            library.remove(e.currentTarget.dataset.index);
+            library.update();
+        });
         
         title.textContent = book.title;
         by.textContent = "by";
@@ -42,6 +55,7 @@ Library.prototype.update = function() {
         card.appendChild(author);
         card.appendChild(pages);
         card.appendChild(read);
+        card.appendChild(removeBook);
         
         bookContainer.appendChild(card);
     });
@@ -68,14 +82,14 @@ function Book(title, author, pages, read) {
 }
 
 const btnAdd = document.getElementById("btn-add");
-const btnSubmit = document.getElementById("book-entry-submit");
+const btnSubmit = document.getElementById("book-entry-form");
 
 btnAdd.addEventListener("click", () => {
     let entry = document.getElementById("book-entry");
     entry.style.visibility = "visible";
 });
 
-btnSubmit.addEventListener("click", (e) => {
+btnSubmit.addEventListener("submit", (e) => {
     let entry = document.getElementById("book-entry");
     entry.style.visibility = "hidden";
     
@@ -87,12 +101,17 @@ btnSubmit.addEventListener("click", (e) => {
     library.add(new Book(title, author, pages, read));
     library.update();
     
+    let textFields = document.querySelectorAll("input[type=text], input[type=number]");
+    [...textFields].forEach(field => {
+        field.value = "";
+    });
+    
+    let readCheckbox = document.querySelector("input[type=checkbox]");
+    readCheckbox.checked = false;
+    
     e.preventDefault();
 });
 
 let library = new Library();
-
-let testBook = new Book("How to Test", "John Smith", 1337, false);
-for (let i = 0; i < 7; ++i) library.add(testBook);
 
 library.update();
