@@ -13,8 +13,7 @@
         </div>
         <div id="content">
             <div class="book-add">
-                <p>Add book</p>
-                <button><img src="img/icon-book-add.png"></button>
+                <button id="btn-add"><span>Add book</span><img src="img/icon-book-add.png"></button>
             </div>
             
             <div class="book-container">
@@ -22,6 +21,24 @@
         </div>
         <div id="footer">
             <h6>Copyright @Wantonfury</h6>
+        </div>
+        
+        <div id="book-entry">
+            <form id="book-entry-form">
+                <label for="book-name">Title: </label>
+                <input type="text" id="book-title" name="book-name">
+                
+                <label for="book-author">Author: </label>
+                <input type="text" id="book-author" name="book-author">
+                
+                <label for="book-pages">Pages: </label>
+                <input type="text" id="book-pages" name="book-pages">
+                
+                <label for="book-read">Read: </label>
+                <input type="checkbox" id="book-read">
+                
+                <input type="submit" id="book-entry-submit">
+            </form>
         </div>
     </body>
 </html>

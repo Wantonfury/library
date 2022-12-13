@@ -21,13 +21,15 @@ Library.prototype.update = function() {
         card.classList.add("book-card");
         
         let title = document.createElement("p");
+        let by = document.createElement("span");
         let author = document.createElement("p");
         let pages = document.createElement("p");
         let read = document.createElement("button");
         
         title.textContent = book.title;
+        by.textContent = "by";
         author.textContent = book.author;
-        pages.textContent = book.pages;
+        pages.textContent = book.pages + " pages";
         
         read.textContent = (book.read === true ? "Read" : "Not read");
         read.dataset.read = book.read;
@@ -36,6 +38,7 @@ Library.prototype.update = function() {
         else read.style.backgroundColor = "green";
         
         card.appendChild(title);
+        card.appendChild(by);
         card.appendChild(author);
         card.appendChild(pages);
         card.appendChild(read);
@@ -64,10 +67,32 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+const btnAdd = document.getElementById("btn-add");
+const btnSubmit = document.getElementById("book-entry-submit");
+
+btnAdd.addEventListener("click", () => {
+    let entry = document.getElementById("book-entry");
+    entry.style.visibility = "visible";
+});
+
+btnSubmit.addEventListener("click", (e) => {
+    let entry = document.getElementById("book-entry");
+    entry.style.visibility = "hidden";
+    
+    let title = document.getElementById("book-title").value;
+    let author = document.getElementById("book-author").value;
+    let pages = document.getElementById("book-pages").value;
+    let read = document.getElementById("book-read").checked;
+    
+    library.add(new Book(title, author, pages, read));
+    library.update();
+    
+    e.preventDefault();
+});
+
 let library = new Library();
 
 let testBook = new Book("How to Test", "John Smith", 1337, false);
-for (let i = 0; i < 60; ++i) library.add(testBook);
-
+for (let i = 0; i < 7; ++i) library.add(testBook);
 
 library.update();
