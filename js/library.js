@@ -1,77 +1,6 @@
-/*function Library() {
-    myLibrary = [];
-}
-
-Library.prototype.add = function(book) {
-    myLibrary.push(book);
-}
-
-Library.prototype.remove = function(index) {
-    if (index < 0) return;
-    myLibrary.splice(index, 1);
-}
-
-Library.prototype.update = function() {
-    let bookContainer = document.getElementsByClassName("book-container")[0];
-    
-    bookContainer.innerHTML = "";
-    
-    myLibrary.forEach((book, index) => {
-        let card = document.createElement("div");
-        
-        card.classList.add("book-card");
-        
-        let title = document.createElement("p");
-        let by = document.createElement("span");
-        let author = document.createElement("p");
-        let pages = document.createElement("p");
-        let read = document.createElement("button");
-        let removeBook = document.createElement("button");
-        let removeImg = document.createElement("img");
-        
-        removeBook.appendChild(removeImg);
-        removeBook.classList.add("book-remove");
-        removeImg.src = "img/icon-book-remove.png";
-        removeBook.dataset.index = index;
-        
-        removeBook.addEventListener("click", (e) => {
-            library.remove(e.currentTarget.dataset.index);
-            library.update();
-        });
-        
-        title.textContent = book.title;
-        by.textContent = "by";
-        author.textContent = book.author;
-        pages.textContent = book.pages + " pages";
-        
-        read.textContent = (book.read === true ? "Read" : "Not read");
-        read.dataset.read = book.read;
-        read.addEventListener('click', readToggle);
-        if (book.read === false) read.style.backgroundColor = "red";
-        else read.style.backgroundColor = "green";
-        
-        card.appendChild(title);
-        card.appendChild(by);
-        card.appendChild(author);
-        card.appendChild(pages);
-        card.appendChild(read);
-        card.appendChild(removeBook);
-        
-        bookContainer.appendChild(card);
-    });
-}
-
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}*/
-
 class Book {
-    constructor(title, name, author, pages, read) {
+    constructor(title, author, pages, read) {
         this.title = title;
-        this.name = name;
         this.author = author;
         this.pages = pages;
         this.read = read;
@@ -79,20 +8,70 @@ class Book {
 }
 
 class Library {
-    #myLibrary = [];
+    myLibrary = [];
     
-    add = () => {
-        
+    add = (book) => {
+        this.myLibrary.push(book);
     }
     
-    remove = () => {
-        
+    remove = (index) => {
+        if (index < 0) return;
+        this.myLibrary.splice(index, 1);
     }
     
-    #update = () => {
+    update = () => {
+        const bookContainer = document.getElementsByClassName("book-container")[0];
+    
+        bookContainer.innerHTML = "";
         
+        this.myLibrary.forEach((book, index) => {
+            const card = document.createElement("div");
+            
+            card.classList.add("book-card");
+            
+            const title = document.createElement("p");
+            const by = document.createElement("span");
+            const author = document.createElement("p");
+            const pages = document.createElement("p");
+            const read = document.createElement("button");
+            const removeBook = document.createElement("button");
+            const removeImg = document.createElement("img");
+            
+            removeBook.appendChild(removeImg);
+            removeBook.classList.add("book-remove");
+            removeImg.src = "img/icon-book-remove.png";
+            removeBook.dataset.index = index;
+            
+            removeBook.addEventListener("click", (e) => {
+                this.remove(e.currentTarget.dataset.index);
+                this.update();
+            });
+            
+            title.textContent = book.title;
+            by.textContent = "by";
+            author.textContent = book.author;
+            pages.textContent = book.pages + " pages";
+            
+            read.textContent = (book.read === true ? "Read" : "Not read");
+            read.dataset.read = book.read;
+            read.addEventListener('click', readToggle);
+            if (book.read === false) read.style.backgroundColor = "red";
+            else read.style.backgroundColor = "green";
+            
+            card.appendChild(title);
+            card.appendChild(by);
+            card.appendChild(author);
+            card.appendChild(pages);
+            card.appendChild(read);
+            card.appendChild(removeBook);
+            
+            bookContainer.appendChild(card);
+        });
     }
 }
+
+let library = new Library();
+library.update();
 
 let readToggle = function(e) {
     if (e.currentTarget.getAttribute("data-read") === "true") {
@@ -150,6 +129,3 @@ formOverlay.addEventListener("click", (e) => {
     e.currentTarget.style.visibility = "hidden";
     ResetForm();
 });
-
-let library = new Library();
-library.update();
