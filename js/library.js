@@ -1,4 +1,4 @@
-function Library() {
+/*function Library() {
     myLibrary = [];
 }
 
@@ -61,6 +61,39 @@ Library.prototype.update = function() {
     });
 }
 
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+}*/
+
+class Book {
+    constructor(title, name, author, pages, read) {
+        this.title = title;
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+}
+
+class Library {
+    #myLibrary = [];
+    
+    add = () => {
+        
+    }
+    
+    remove = () => {
+        
+    }
+    
+    #update = () => {
+        
+    }
+}
+
 let readToggle = function(e) {
     if (e.currentTarget.getAttribute("data-read") === "true") {
         e.currentTarget.setAttribute("data-read", "false");
@@ -72,13 +105,6 @@ let readToggle = function(e) {
         e.currentTarget.textContent = "Read";
         e.currentTarget.style.backgroundColor = "green";
     }
-}
-
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
 }
 
 const btnAdd = document.getElementById("btn-add");
